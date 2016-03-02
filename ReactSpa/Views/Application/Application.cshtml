@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+
+    <script src="~/Content/Scripts/react.js"></script>
+    <script src="~/Content/Scripts/react-dom.js"></script>
+    <script src="~/App/Application.js"></script>
+    <script src="~/App/Router.js"></script>
+    <script src="~/App/Screens/Menu.js"></script>
+    <script src="~/App/Screens/About.js"></script>
+    <script src="~/App/Screens/Search.js"></script>
+    <script src="~/App/Screens/Start.js"></script>
+
+    <script type="text/javascript">
+
+        window.onload = function() {
+            window["app"] = Application.mount(document.getElementById("app"));
+        };
+
+    </script>
+</head>
+<body>
+    <div id="app">
+        <h1>ReactSPA</h1>
+    </div>
+</body>
+</html>
