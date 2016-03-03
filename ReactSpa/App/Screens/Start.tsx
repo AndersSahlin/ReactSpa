@@ -1,19 +1,15 @@
 ﻿
 declare var fetch: any;
 
-class Start extends React.Component<{ message: string }, { timestamp?: Date, message?: string, loading?: boolean }> {
+class Start extends React.Component<{}, {}> {
 
-    static route = "start";
+    //static route = "start";
 
-    constructor(props: any) {
-        super(props);
-
-        this.state = {
-            timestamp: new Date(),
-            message: "default",
-            loading: false
-        };
-    }
+    state = {
+        timestamp: new Date(),
+        message: "default value",
+        loading: false
+    };
 
     componentDidMount() {
 
@@ -22,13 +18,19 @@ class Start extends React.Component<{ message: string }, { timestamp?: Date, mes
         fetch("api/Start/Load").then(response => {
             response.json().then(data => {
                 console.log(data);
+
                 this.setState({ message: data.Message, loading: false });
             });
         });
+    }
 
+    componentWillUnmount() {
+        // todo: abort fetch
     }
 
     render() {
+        console.log("render");
+
         return (
             <div>
                 <h1>{this.state.message}</h1>

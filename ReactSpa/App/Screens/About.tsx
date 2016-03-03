@@ -1,8 +1,5 @@
 ﻿
-
-class About extends React.Component<{params?:string[]},{}> {
-
-    static route = "about";
+class About extends React.Component<{ params: string[] }, {}> {
 
     render() {
         return (

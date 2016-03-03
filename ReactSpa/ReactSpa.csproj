@@ -118,7 +118,7 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="App\Application.tsx" />
-    <TypeScriptCompile Include="App\Router.tsx" />
+    <TypeScriptCompile Include="App\Components\Router.tsx" />
     <TypeScriptCompile Include="App\Screens\About.tsx" />
     <TypeScriptCompile Include="App\Screens\Menu.tsx" />
     <TypeScriptCompile Include="App\Screens\Search.tsx" />

@@ -1,28 +1,22 @@
 ﻿
 
-class Application extends React.Component<{}, { screens: any[] }> {
+class Application extends React.Component<{}, {}> {
 
     static mount(mountElement: HTMLElement) {
         return ReactDOM.render(<Application />, mountElement) as Application;
     }
 
-    constructor() {
-        super();
-
-        this.state = {
-            screens: [
-                Start,
-                About,
-                Search
-            ]
-        };
-    }
+    private screens = [
+        Start,
+        About,
+        Search
+    ];
 
     render() {
         return (
             <div>
-                <Menu screens={this.state.screens} />
-                <Router screens={this.state.screens} />
+                <Menu screens={this.screens} />
+                <Router screens={this.screens} />
             </div>
         );
     }

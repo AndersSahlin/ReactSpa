@@ -1,17 +1,8 @@
 ﻿
+class Search extends React.Component<{}, {}> {
 
-class Search extends React.Component<{}, { query?: string }> {
-
-    static route = "search";
-
-    constructor() {
-        super();
-
-        this.state = {  };
-    }
-
-    handleChange = (event) => {
-        this.setState({ query: event.target.value });
+    state = {
+        query: null as string
     };
 
     render() {
@@ -27,5 +18,9 @@ class Search extends React.Component<{}, { query?: string }> {
             </div>
         );
     }
+
+    private handleChange = (event) => {
+        this.setState({ query: event.target.value });
+    };
 
 }
