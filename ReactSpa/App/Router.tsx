@@ -1,5 +1,7 @@
 ﻿
-class Router extends React.Component<{ screens: any[] }, { hash?: string, route?: string, params?: string }> {
+class Router extends React.Component<{ screens: any[] }, { hash?: string, route?: string, params?: string[] }> {
+
+    private routePattern: RegExp = /#\/([^\/]*)[\/]?(.*)/g;
 
     constructor() {
         super();
@@ -14,7 +16,7 @@ class Router extends React.Component<{ screens: any[] }, { hash?: string, route?
 
     render() {
         const Screen = this.getCurrentScreen();
-        return <Screen/>;
+        return <Screen params={this.state.params} />;
     }
 
     getCurrentScreen() {
@@ -23,13 +25,16 @@ class Router extends React.Component<{ screens: any[] }, { hash?: string, route?
     }
 
     getCurrentRoute() {
-        const route = window.location.hash.match(/#\/([^\/]*)[\/]?(.*)/);
+        const route = this.routePattern.exec(window.location.hash);
 
         return {
             hash: window.location.hash,
             route: route ? route[1] : null,
-            params: route ? route[2] ? route[2] : null : null
+            params: this.extractParametersFromRoute(route)
         };
     }
 
+    extractParametersFromRoute(route: RegExpMatchArray) {
+        return route && route[2] ? route[2].split("/") : [];
+    }
 }
