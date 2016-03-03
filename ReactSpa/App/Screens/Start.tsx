@@ -7,7 +7,12 @@ class Start extends React.Component<{ message: string }, { timestamp?: Date, mes
 
     constructor(props: any) {
         super(props);
-        this.state = { timestamp: new Date(), message: "default", loading: false };
+
+        this.state = {
+            timestamp: new Date(),
+            message: "default",
+            loading: false
+        };
     }
 
     componentDidMount() {
