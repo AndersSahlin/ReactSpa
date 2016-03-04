@@ -123,9 +123,9 @@
     <TypeScriptCompile Include="App\Screens\Menu.tsx" />
     <TypeScriptCompile Include="App\Screens\Search.tsx" />
     <TypeScriptCompile Include="App\Screens\Start.tsx" />
-    <TypeScriptCompile Include="Content\Typings\react-dom.d.ts" />
-    <TypeScriptCompile Include="Content\Typings\react-global.ts" />
-    <TypeScriptCompile Include="Content\Typings\react.d.ts" />
+    <TypeScriptCompile Include="Content\Definitions\react-dom.d.ts" />
+    <TypeScriptCompile Include="Content\Definitions\react-global.ts" />
+    <TypeScriptCompile Include="Content\Definitions\react.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
