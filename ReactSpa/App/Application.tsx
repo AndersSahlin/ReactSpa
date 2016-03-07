@@ -1,5 +1,4 @@
 ﻿
-
 class Application extends React.Component<{}, {}> {
 
     static mount(mountElement: HTMLElement) {

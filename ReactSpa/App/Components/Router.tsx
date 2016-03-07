@@ -14,8 +14,7 @@ class Router extends React.Component<{ screens: any[] }, {}> {
     }
 
     render() {
-        const Screen = this.getCurrentScreen();
-        return <Screen params={this.state.params} />;
+        return ScreenResolver.getScreen(this.props.screens, this.state.route, this.state.params);
     }
 
     ///
@@ -37,13 +36,56 @@ class Router extends React.Component<{ screens: any[] }, {}> {
     private extractParametersFromRoute(route: RegExpMatchArray) {
         return route && route[2] ? route[2].split("/") : [];
     }
+}
 
-    private getCurrentScreen() {
-        const current = this.props.screens.filter(screen => this.doesRouteMatchScreen(this.state.route, screen))[0];
-        return current || this.props.screens[0];
+class ScreenResolver {
+
+    static getScreen(screens: any[], route: string, params: string[]) {
+        const routeMatchedScreenType = screens.filter(screen => this.doesRouteMatchScreen(route, screen))[0];
+        const screenType = routeMatchedScreenType || screens[0];
+
+        const screenProxy = this.createProxyInstance(screenType);
+        screenProxy.params = params;
+
+        return <ScreenComponent instance={screenProxy} />;
     }
 
-    private doesRouteMatchScreen(route: string, screen: any): boolean {
+    private static doesRouteMatchScreen(route: string, screen: any): boolean {
         return route === (screen.route || screen.name.toLowerCase());
     }
+
+    private static createProxyInstance(componentType) {
+        var ctor = eval(`(function() { return new ${componentType.name}(); });`);
+        var instance = ctor.apply(this);
+
+        Object.getOwnPropertyNames(instance).map(property => {
+            let backing = instance[property];
+            Object.defineProperty(instance, property, {
+                get: () => backing,
+                set: (value) => {
+                    backing = value;
+                    instance.__stateHasChanged();
+                }
+            });
+        });
+
+        return instance;
+    }
+}
+
+class ScreenComponent extends React.Component<{ instance: any }, {}> {
+
+    componentDidMount() {
+        this.props.instance.__stateHasChanged = () => {
+            this.forceUpdate();
+        };
+
+        if (this.props.instance.load)
+            this.props.instance.load.call(this.props.instance);
+    }
+
+    render() {
+        return this.props.instance.render();
+    }
+
 }

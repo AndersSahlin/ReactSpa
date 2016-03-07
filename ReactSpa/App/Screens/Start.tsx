@@ -1,41 +1,40 @@
 ﻿
 declare var fetch: any;
 
-class Start extends React.Component<{}, {}> {
+class Start {
 
     //static route = "start";
 
-    state = {
-        timestamp: new Date(),
-        message: "default value",
-        loading: false
-    };
+    timestamp: Date = new Date();
+    message: string = "default value";
+    loading: boolean = false;
 
-    componentDidMount() {
+    load() {
 
-        this.setState({ loading: true });
+        this.loading = true;
 
         fetch("api/Start/Load").then(response => {
             response.json().then(data => {
                 console.log(data);
 
-                this.setState({ message: data.Message, loading: false });
+                this.message = data.Message;
+                this.loading = false;
             });
         });
     }
 
-    componentWillUnmount() {
-        // todo: abort fetch
-    }
+    //componentWillUnmount() {
+    //    // todo: abort fetch
+    //}
 
     render() {
         console.log("render");
 
         return (
             <div>
-                <h1>{this.state.message}</h1>
-                <p>{this.state.timestamp.toString() }</p>
-                <p>{this.state.loading ? "Loading" : "Done"}</p>
+                <h1>{this.message}</h1>
+                <p>{this.timestamp.toString()}</p>
+                <p onClick={() => this.loading = !this.loading}>{this.loading ? "Loading" : "Done"}</p>
             </div>
         );
     }
