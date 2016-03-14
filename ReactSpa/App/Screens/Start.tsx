@@ -29,7 +29,7 @@ class Start {
 
     render() {
         console.log("render");
-
+        
         return (
             <div>
                 <h1>{this.message}</h1>

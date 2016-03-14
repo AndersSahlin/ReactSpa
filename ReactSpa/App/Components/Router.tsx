@@ -58,16 +58,6 @@ class ScreenResolver {
         var ctor = eval(`(function() { return new ${componentType.name}(); });`);
         var instance = ctor.apply(this);
 
-        Object.getOwnPropertyNames(instance).map(property => {
-            let backing = instance[property];
-            Object.defineProperty(instance, property, {
-                get: () => backing,
-                set: (value) => {
-                    backing = value;
-                    instance.__stateHasChanged();
-                }
-            });
-        });
 
         return instance;
     }
@@ -76,12 +66,21 @@ class ScreenResolver {
 class ScreenComponent extends React.Component<{ instance: any }, {}> {
 
     componentDidMount() {
-        this.props.instance.__stateHasChanged = () => {
-            this.forceUpdate();
-        };
+        const instance = this.props.instance;
 
-        if (this.props.instance.load)
-            this.props.instance.load.call(this.props.instance);
+        Object.getOwnPropertyNames(instance).map(property => {
+            let backing = instance[property];
+            Object.defineProperty(instance, property, {
+                get: () => backing,
+                set: (value) => {
+                    backing = value;
+                    this.forceUpdate();
+                }
+            });
+        });
+        
+        if (instance.load)
+            instance.load.call(instance);
     }
 
     render() {
